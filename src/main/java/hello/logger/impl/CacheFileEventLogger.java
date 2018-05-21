@@ -1,30 +1,38 @@
-package hello;
+package hello.logger.impl;
 
+import hello.entity.Event;
+import hello.logger.EventLogger;
 import org.apache.commons.io.FileUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CacheFileEventLogger extends FileEventLogger {
+@Component
+public class CacheFileEventLogger implements EventLogger {
 
+	@Value("2")
 	private int cacheSize;
+
+	@Value("log.txt")
+	private String filename;
+
+	private File file;
+
 	private List<Event> cache;
 
-	public CacheFileEventLogger(int cacheSize, String filename) {
-		super(filename);
-		System.out.println("CacheFileEventLogger constructor");
-		this.cacheSize = cacheSize;
-	}
-
-	public void init() throws IOException {
-		System.out.println("CacheFileEventLogger init");
-		this.cache = new ArrayList<>(cacheSize);
+	@PostConstruct
+	private void init() {
+		cache = new ArrayList<>(cacheSize);
 		file = new File(filename);
-
 	}
 
+	@PreDestroy
 	public void destroy() {
 		if (!cache.isEmpty()) writeEventsFromCache();
 	}

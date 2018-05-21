@@ -1,21 +1,30 @@
-package hello;
+package hello.entity;
+
+import hello.util.EventType;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.concurrent.ThreadLocalRandom;
 
+@Component
+@Scope("prototype")
 public class Event {
 
 	private int id;
 	private String message;
-	private Date date;
-	private DateFormat dateFormat;
 	private EventType type;
 
-	public Event(Date date, DateFormat dateFormat) {
-		this.id = ThreadLocalRandom.current().nextInt(1, 999);
-		this.date = date;
-		this.dateFormat = dateFormat;
+	@Autowired
+	private Date date;
+
+	@Autowired
+	private DateFormat dateFormat;
+
+	public Event() {
+		id = ThreadLocalRandom.current().nextInt(1, 999);
 	}
 
 	public void setMessage(String message) {

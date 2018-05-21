@@ -1,4 +1,6 @@
-package hello;
+package hello.logger;
+
+import hello.entity.Event;
 
 public interface EventLogger {
 

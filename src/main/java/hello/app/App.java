@@ -1,27 +1,27 @@
-package hello;
+package hello.app;
 
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import hello.config.AppConfig;
+import hello.entity.Client;
+import hello.entity.Event;
+import hello.util.EventType;
+import hello.logger.EventLogger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
+@Component
 public class App {
 
+	@Autowired
 	private Client client;
+
+	@Autowired
 	private Event event;
+
+	@Autowired
 	private Map<EventType, EventLogger> loggerMap;
-
-	public void setClient(Client client) {
-		this.client = client;
-	}
-
-	public void setEvent(Event event) {
-		this.event = event;
-	}
-
-	public void setLoggerMap(Map<EventType, EventLogger> loggerMap) {
-		this.loggerMap = loggerMap;
-	}
 
 	private void logEvent(String msg, EventType type) {
 		String message = msg.replaceAll(client.getId(), client.getFullName());
@@ -32,7 +32,7 @@ public class App {
 
 	public static void main(String[] args) throws InterruptedException {
 
-		ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
 		App app = (App) context.getBean("app");
 
@@ -47,6 +47,6 @@ public class App {
 			Thread.sleep(1000);
 		}
 		System.out.println("Closing context:");
-		context.close();
+		///context.close();
 	}
 }
