@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
-import java.text.DateFormat;
 import java.util.*;
 
 @Configuration
@@ -19,16 +19,16 @@ import java.util.*;
 public class AppConfig {
 
 	@Autowired
-	private ConsoleEventLogger consoleEventLogger;
+	private EventLogger consoleEventLogger;
 
 	@Autowired
-	private FileEventLogger fileEventLogger;
+	private EventLogger fileEventLogger;
 
 	@Autowired
-	private CacheFileEventLogger cacheFileEventLogger;
+	private EventLogger cacheFileEventLogger;
 
 	@Autowired
-	private CombinedEventLogger combinedEventLogger;
+	private EventLogger combinedEventLogger;
 
 	@Bean
 	public Map<EventType, EventLogger> loggerMap() {
@@ -44,15 +44,5 @@ public class AppConfig {
 		loggers.add(consoleEventLogger);
 		loggers.add(fileEventLogger);
 		return loggers;
-	}
-
-	@Bean
-	public Date date() {
-		return new Date();
-	}
-
-	@Bean
-	public DateFormat dateFormat() {
-		return DateFormat.getDateTimeInstance();
 	}
 }

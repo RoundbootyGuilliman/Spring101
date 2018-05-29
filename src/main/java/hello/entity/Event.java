@@ -2,6 +2,7 @@ package hello.entity;
 
 import hello.util.EventType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -17,10 +18,10 @@ public class Event {
 	private String message;
 	private EventType type;
 
-	@Autowired
+	@Value("#{new java.util.Date()}")
 	private Date date;
 
-	@Autowired
+	@Value("#{T(java.text.DateFormat).getDateTimeInstance()}")
 	private DateFormat dateFormat;
 
 	public Event() {

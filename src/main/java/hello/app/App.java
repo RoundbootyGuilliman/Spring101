@@ -47,6 +47,6 @@ public class App {
 			Thread.sleep(1000);
 		}
 		System.out.println("Closing context:");
-		///context.close();
+		context.close();
 	}
 }
