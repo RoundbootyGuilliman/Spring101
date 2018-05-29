@@ -36,6 +36,7 @@ public class App {
 
 		App app = (App) context.getBean("app");
 
+		System.out.println(app.client + " " + app.event);
 		for (int i = 0; i < 4; i++) {
 			System.out.println("Invoking log method:");
 			app.logEvent("Some event for user 1", EventType.ERROR);
